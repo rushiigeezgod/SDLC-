@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Rushikesh</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    :root {
+      --primary-color: #0D6EFD;
+      --background-color: linear-gradient(#0A0A0A, #1A1A1A);
+      --text-color: #FFFFFF;
+      --font-family: 'Inter', sans-serif;
+    }
+
+    .light-mode {
+      --background-color: linear-gradient(#F9F9F9, #FFFFFF);
+      --text-color: #111111;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--background-color);
+      color: var(--text-color);
+      font-family: var(--font-family);
+      display: grid;
+      place-items: center;
+    }
+
+    .container {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      margin: 2rem;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .container { margin: 1rem; }
+      body { font-size: 2.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .container { margin: 0.5rem; }
+    }
+
+    h1 {
+      font-size: 4rem;
+      letter-spacing: 0.05em;
+      margin: 0;
+      overflow: hidden;          /* hide the overflowing text */
+      white-space: nowrap;       /* keep the text on a single line */
+      border-right: .15em solid var(--primary-color); /* caret */
+    }
+
+    /* Typewriter entrance */
+    @keyframes typewriter {
+      from { width: 0; }
+      to   { width: 100%; }
+    }
+
+    .entrance-animation {
+      animation: typewriter 1.5s steps(12) forwards;
+    }
+
+    /* Pulse loop */
+    @keyframes pulse {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+
+    /* Focus outline */
+    :focus {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div role="heading" aria-label="Greeting: Hello Rushikesh" tabindex="0"
+       class="container pulse-animation">
+    <h1 class="greeting entrance-animation">Hello Rushikesh</h1>
+  </div>
+
+  <script>
+    // Expose API to change theme at runtime
+    function setTheme({ color, font, speed }) {
+      if (color) {
+        document.documentElement.style.setProperty('--primary-color', color);
+      }
+      if (font) {
+        document.documentElement.style.setProperty('--font-family', font);
+      }
+      if (speed) {
+        const pulseEl = document.querySelector('.pulse-animation');
+        if (pulseEl) {
+          pulseEl.style.animationDuration = `${speed}s`;
+        }
+      }
+    }
+
+    // Optional: toggle dark / light mode with a double‑tap (for demo)
+    document.documentElement.addEventListener('dblclick', () => {
+      document.documentElement.classList.toggle('light-mode');
+      document.documentElement.classList.toggle('dark-mode');
+    });
+
+    // Ensure the typewriter animation restarts on focus (accessibility)
+    const greeting = document.querySelector('.greeting');
+    greeting.addEventListener('focus', () => {
+      greeting.classList.remove('entrance-animation');
+      // trigger reflow
+      void greeting.offsetWidth;
+      greeting.classList.add('entrance-animation');
+    });
+  </script>
+</body>
+</html>
